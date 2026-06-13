@@ -1,0 +1,288 @@
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF0A0A0A)) // Black background for top side
+                .padding(innerPadding)
+        ) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { viewModel.navigateTo("home") },
+                    modifier = Modifier
+                        .background(Color(0xFF1E1E1E), CircleShape)
+                        .size(36.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "رجوع",
+                        tint = Color.White,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+                Text(
+                    text = "الحساب",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                IconButton(
+                    onClick = { viewModel.navigateTo("notifications") },
+                    modifier = Modifier
+                        .background(Color(0xFF1E1E1E), CircleShape)
+                        .size(36.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Notifications,
+                        contentDescription = "التنبيهات",
+                        tint = Color.White,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            // User Info Section
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(contentAlignment = Alignment.BottomEnd) {
+                    Image(
+                        painter = painterResource(id = com.example.R.drawable.dramatic_portrait_1780966896428),
+                        contentDescription = "Profile Picture",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, Color(0xFF333333), CircleShape)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .offset(x = 4.dp, y = 4.dp)
+                            .size(26.dp)
+                            .background(Color(0xFF1E1E1E), CircleShape)
+                            .border(2.dp, Color(0xFF0A0A0A), CircleShape)
+                            .clickable { showEditDialog = true },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = "تغيير الصورة",
+                            tint = Color.White,
+                            modifier = Modifier.size(14.dp)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = userName.ifBlank { "زائر" },
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = userPhone.ifBlank { "رقم الهاتف غير متاح" },
+                    fontSize = 13.sp,
+                    color = Color.Gray
+                )
+            }
+
+            // White rounded bottom section (The lists)
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                color = Color.White, // pure white to match design
+                shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Group 1
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
+                        shape = RoundedCornerShape(20.dp),
+                        elevation = CardDefaults.cardElevation(0.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { showRechargeDialog = true }
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                Icon(Icons.Default.AccountBalanceWallet, null, tint = Color(0xFF6B7280), modifier = Modifier.size(24.dp))
+                                Text("المحفظة والرصيد", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                            }
+                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                        }
+                    }
+
+                    // Group 2
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
+                        shape = RoundedCornerShape(20.dp),
+                        elevation = CardDefaults.cardElevation(0.dp)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { editName = userName; editPhone = userPhone; editAddress = userAddress; editAge = patientAge; editBloodType = patientBloodType; editWeight = patientWeight; editGender = patientGender; editConditions = patientConditions; editAllergies = patientAllergies; editEmergencyName = emergencyContactName; editEmergencyPhone = emergencyContactPhone; editHeartRate = recentHeartRate; editBloodPressure = recentBloodPressure; editBloodSugar = recentBloodSugar; showEditDialog = true }
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.Edit, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("تعديل الملف الطبي", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                            }
+                            HorizontalDivider(color = Color(0xFFE5E7EB), modifier = Modifier.padding(horizontal = 56.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { showVitalHistoryDialog = true }
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.HealthAndSafety, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("لوحة القياسات الحيوية", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                            }
+                            HorizontalDivider(color = Color(0xFFE5E7EB), modifier = Modifier.padding(horizontal = 56.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { showAddDocDialog = true }
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.Description, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("الوصفات والتحاليل", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                            }
+                            HorizontalDivider(color = Color(0xFFE5E7EB), modifier = Modifier.padding(horizontal = 56.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { showAddReminderDialog = true }
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.Medication, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("التذكير بالأدوية", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                            }
+                        }
+                    }
+
+                    // Group 3
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
+                        shape = RoundedCornerShape(20.dp),
+                        elevation = CardDefaults.cardElevation(0.dp)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { viewModel.initSupportChat(); showSupportChatOverlay = true }
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.SupportAgent, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("الدعم الطبي اللحظي", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                            }
+                            HorizontalDivider(color = Color(0xFFE5E7EB), modifier = Modifier.padding(horizontal = 56.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    Icon(Icons.Default.NotificationsActive, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                    Text("تفعيل الإشعارات", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                }
+                                Switch(
+                                    checked = notificationEnabled,
+                                    onCheckedChange = { notificationEnabled = it },
+                                    colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = Color(0xFF10B981))
+                                )
+                            }
+                            if (bookings.isNotEmpty()) {
+                                HorizontalDivider(color = Color(0xFFE5E7EB), modifier = Modifier.padding(horizontal = 56.dp))
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { viewModel.clearAllHistory() }
+                                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                        Icon(Icons.Default.SettingsBackupRestore, null, tint = Color(0xFF6B7280), modifier = Modifier.size(22.dp))
+                                        Text("مسح سجل الحجوزات السابقة", color = Color(0xFF111827), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                                    }
+                                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                                }
+                            }
+                        }
+                    }
+
+                    // Logout
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
+                        shape = RoundedCornerShape(20.dp),
+                        elevation = CardDefaults.cardElevation(0.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { viewModel.performLogout() }
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                Icon(Icons.AutoMirrored.Filled.Logout, null, tint = Color(0xFFFF5A79), modifier = Modifier.size(22.dp))
+                                Text("تسجيل الخروج", color = Color(0xFFFF5A79), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                            }
+                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color(0xFFD1D5DB), modifier = Modifier.size(20.dp))
+                        }
+                    }
+                    
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+            }
+        }

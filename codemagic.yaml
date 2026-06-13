@@ -1,0 +1,51 @@
+# Codemagic CI/CD Pipeline Configuration for Maak Care Android App
+# For detailed configuration options, visit: https://docs.codemagic.io/yaml/running-builds/
+
+workflows:
+  android-build-pipeline:
+    name: Maak Care Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1 # Premium MacOS instance, or change to linux for standard Linux builds
+    environment:
+      groups:
+        # Define secure environment groups in your Codemagic dashboard
+        # - google_play_credentials 
+        # - keystore_details
+      vars:
+        PACKAGE_NAME: "com.aistudio.elmorsycare.jnwtya"
+      java: 17
+      android_sdk: 34
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+        - pattern: 'master'
+          include: true
+        - pattern: '*'
+          include: true
+    scripts:
+      - name: Generate Gradle Wrapper
+        script: |
+          gradle wrapper
+      - name: Set up local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+      - name: Build Android Debug APK
+        script: |
+          ./gradlew assembleDebug
+      - name: Run JVM Unit & Robolectric Tests
+        script: |
+          ./gradlew testDebugUnitTest
+    artifacts:
+      - app/build/outputs/apk/**/*.apk
+      - app/build/reports/tests/**/*.html
+    publishing:
+      email:
+        recipients:
+          - tempex785@gmail.com
+        notify:
+          success: true
+          failure: true

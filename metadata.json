@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: Remix: Remix: Remix: معاك",
+  "description": "Premium healthcare home nursing service application with Arabic and RTL support, providing integrated home health services, doctor visits, physical therapy, and booking trackers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
